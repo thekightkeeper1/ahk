@@ -131,8 +131,6 @@ OnChangeDesktop(wParam, lParam, msg, hwnd) {
 ; #^!+v::MoveOrGotoDesktopNumber(12)
 ; #^!+b::MoveOrGotoDesktopNumber(13)
 
-rename
-
 F13 & 1:: MoveOrGotoDesktopNumber(0)
 F13 & 2:: MoveOrGotoDesktopNumber(1)
 F13 & 3:: MoveOrGotoDesktopNumber(2)
@@ -148,5 +146,5 @@ F13 & c:: MoveOrGotoDesktopNumber(11)
 F13 & v:: MoveOrGotoDesktopNumber(12)
 F13 & b:: MoveOrGotoDesktopNumber(13)
 #w::
-#h:: GoToPrevDesktop()
-#l UP:: GoToNextDesktop()
+!h:: GoToPrevDesktop()
+!l:: GoToNextDesktop()
