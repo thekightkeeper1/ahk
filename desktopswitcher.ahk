@@ -107,6 +107,7 @@ SetDesktopName(0, "It works! 🐱")
 DllCall(RegisterPostMessageHookProc, "Ptr", A_ScriptHwnd, "Int", 0x1400 + 30, "Int")
 OnMessage(0x1400 + 30, OnChangeDesktop)
 OnChangeDesktop(wParam, lParam, msg, hwnd) {
+    global NewDesktop
     Critical(1)
     OldDesktop := wParam + 1
     NewDesktop := lParam + 1
@@ -132,7 +133,22 @@ OnChangeDesktop(wParam, lParam, msg, hwnd) {
 ; #^!+v::MoveOrGotoDesktopNumber(12)
 ; #^!+b::MoveOrGotoDesktopNumber(13)
 
-; rename
+
+
+
+U_Gui := Gui("-Caption +AlwaysOnTop +ToolWindow +Border", "Unicode Entry")
+U_Gui.SetFont("s14", "Segoe UI")
+U_Gui.BackColor := "1d1d1d" ; Dark background
+U_Gui.Color := "1d1d1d"
+U_Edit := U_Gui.Add("Edit", "w150 h35 cWhite Background333333 Center -E0x200")
+U_Button := U_Gui.AddButton("Default w0 h0 Center")
+U_Button.OnEvent("Click", rename)
+
+rename(*) {
+    global NewDesktop
+  SetDesktopName(NewDesktop - 1, U_Edit.value)
+  U_Gui.Hide()  
+}
 
 F13 & 1:: MoveOrGotoDesktopNumber(0)
 F13 & 2:: MoveOrGotoDesktopNumber(1)
@@ -148,6 +164,9 @@ F13 & x:: MoveOrGotoDesktopNumber(10)
 F13 & c:: MoveOrGotoDesktopNumber(11)
 F13 & v:: MoveOrGotoDesktopNumber(12)
 F13 & b:: MoveOrGotoDesktopNumber(13)
-; #w::
+#w::{
+    U_Gui.Show()
+    U_Edit.Focus()
+}
 !h:: GoToPrevDesktop()
 !L:: GoToNextDesktop()
